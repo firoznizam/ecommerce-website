@@ -69,7 +69,7 @@ export const WholesalePage: React.FC = () => {
             Wholesale Produce Sourcing Built for Food Businesses
           </h1>
           <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
-            Direct farmer crate allocations, transparent morning mandi auction benchmarking, and dependable dawn deliveries at 4:30 AM.
+            Direct farmer crate allocations, transparent morning wholesale auction benchmarking, and dependable dawn deliveries at 4:30 AM.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-4">

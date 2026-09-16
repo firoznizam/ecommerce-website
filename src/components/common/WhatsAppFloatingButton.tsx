@@ -40,7 +40,7 @@ export const WhatsAppFloatingButton: React.FC = () => {
               </button>
             </div>
             <p className="text-xs text-emerald-100 mt-2 bg-emerald-900/50 p-2 rounded-lg leading-relaxed">
-              Order fresh produce, request today's mandi sheet, or get immediate wholesale quotes.
+              Order fresh produce, request today's daily price sheet, or get immediate wholesale quotes.
             </p>
           </div>
 

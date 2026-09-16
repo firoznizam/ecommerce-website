@@ -80,7 +80,7 @@ export const TodaysPricesPage: React.FC = () => {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/80 border border-emerald-600/50 text-emerald-200 text-xs font-bold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Live Mandi Rates • Updated {settings.lastMarketPriceUpdateTimestamp}</span>
+              <span>Live Market Rates • Updated {settings.lastMarketPriceUpdateTimestamp}</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
               Today's Vegetable & Fruit Rates
@@ -97,17 +97,17 @@ export const TodaysPricesPage: React.FC = () => {
                 setIsSyncing(true);
                 setTimeout(() => {
                   const res = triggerAutoDailyPriceUpdate({ showToast: false });
-                  setSyncNotice(`✓ Fresh Mandi Rates Applied! ${res.summary.droppedCount} items dropped today at ${res.summary.mandiSource.split(' ')[0]}.`);
+                  setSyncNotice(`✓ Fresh Market Rates Applied! ${res.summary.droppedCount} items dropped today at ${res.summary.mandiSource.split(' ')[0]}.`);
                   setIsSyncing(false);
                   setTimeout(() => setSyncNotice(null), 5000);
                 }, 500);
               }}
               disabled={isSyncing}
               className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-black shadow-md flex items-center gap-1.5 transition-all cursor-pointer"
-              title="Recalibrate live prices against morning Kerala Mandi auction feed"
+              title="Recalibrate live prices against morning Kerala market arrivals feed"
             >
               <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
-              <span>{isSyncing ? 'Syncing Mandi...' : 'Auto-Sync Market Prices'}</span>
+              <span>{isSyncing ? 'Syncing Rates...' : 'Auto-Sync Market Prices'}</span>
             </button>
             <button
               onClick={handleCopyRates}

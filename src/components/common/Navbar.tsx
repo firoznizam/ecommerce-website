@@ -70,7 +70,7 @@ export const Navbar: React.FC = () => {
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-700 text-emerald-100 uppercase tracking-wider">
-                Mandi Update
+                Daily Rates
               </span>
               <span className="font-medium text-emerald-50 text-xs sm:text-sm">
                 {settings.announcementText}

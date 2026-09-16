@@ -280,7 +280,7 @@ export const ShopPage: React.FC = () => {
             <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1">
               <div className="flex items-center gap-1.5 text-emerald-900 font-bold">
                 <Clock className="w-3.5 h-3.5 text-emerald-700" />
-                <span>Mandi Price Promise</span>
+                <span>Daily Market Price Promise</span>
               </div>
               <p className="text-[11px] text-emerald-800 leading-tight">
                 All listed prices are updated daily from morning farm depot arrivals. Wholesale discounts apply automatically based on item quantity.

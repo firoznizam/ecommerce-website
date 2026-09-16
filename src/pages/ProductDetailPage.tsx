@@ -424,7 +424,7 @@ export const ProductDetailPage: React.FC = () => {
                 <div className="space-y-1.5">
                   {productHistory.slice(0, 3).map((hist) => (
                     <div key={hist.id} className="flex items-center justify-between text-[11px] text-stone-600">
-                      <span>{hist.effectiveAt.split(' ')[0]} ({hist.reason || 'Mandi adjustment'})</span>
+                      <span>{hist.effectiveAt.split(' ')[0]} ({hist.reason || 'Market adjustment'})</span>
                       <span className="font-semibold">
                         {settings.currencySymbol}{hist.oldPrice.toFixed(2)} → <strong className="text-emerald-800">{settings.currencySymbol}{hist.newPrice.toFixed(2)}</strong>
                       </span>

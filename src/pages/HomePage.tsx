@@ -42,7 +42,7 @@ export const HomePage: React.FC = () => {
               {/* Daily Market Price Pill */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-800/80 border border-emerald-600/50 text-emerald-200 text-xs font-semibold backdrop-blur-md">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Mandi Rates Updated: {settings.lastMarketPriceUpdateTimestamp}</span>
+                <span>Market Rates Updated: {settings.lastMarketPriceUpdateTimestamp}</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white">
@@ -101,7 +101,7 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Hero Right Visual Card: Daily Mandi Highlights */}
+            {/* Hero Right Visual Card: Daily Market Highlights */}
             <div className="lg:col-span-5">
               <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative">
                 <div className="flex items-center justify-between pb-4 border-b border-stone-800">
@@ -110,8 +110,8 @@ export const HomePage: React.FC = () => {
                       AV
                     </div>
                     <div>
-                      <h3 className="font-bold text-sm text-white">Today's Mandi Sheet</h3>
-                      <p className="text-[11px] text-emerald-400">Verified market rates</p>
+                      <h3 className="font-bold text-sm text-white">Today's Market Rates</h3>
+                      <p className="text-[11px] text-emerald-400">Verified wholesale rates</p>
                     </div>
                   </div>
                   <button
@@ -318,9 +318,9 @@ export const HomePage: React.FC = () => {
             <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center mb-4">
               <TrendingDown className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-stone-900 text-base mb-1.5">Transparent Mandi Rates</h3>
+            <h3 className="font-bold text-stone-900 text-base mb-1.5">Transparent Market Rates</h3>
             <p className="text-xs text-stone-600 leading-relaxed">
-              Our prices reflect honest market wholesale dynamics. When mandi supply surges, our prices drop instantly so you enjoy real cost savings.
+              Our prices reflect honest market wholesale dynamics. When market arrivals surge, our prices drop instantly so you enjoy real cost savings.
             </p>
           </div>
 
@@ -533,7 +533,7 @@ export const HomePage: React.FC = () => {
           <div className="p-4 rounded-2xl bg-white border border-stone-200">
             <h4 className="font-bold text-stone-900 mb-1">When are prices updated on the website?</h4>
             <p className="text-stone-600">
-              Our produce team updates prices every morning between 05:00 AM and 06:00 AM following the regional mandi auctions. You can always check the "Price Updated Today" badge on any product.
+              Our produce team updates prices every morning between 05:00 AM and 06:00 AM following the regional morning wholesale market arrivals. You can always check the "Price Updated Today" badge on any product.
             </p>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-stone-200">
