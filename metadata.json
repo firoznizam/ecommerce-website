@@ -1,0 +1,6 @@
+{
+  "name": "Adam Vegetables",
+  "description": "Kerala, India wholesale & retail fresh vegetable market platform with live morning mandi pricing in Rupees (₹), bulk crate ordering, WhatsApp ordering, and local delivery.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
