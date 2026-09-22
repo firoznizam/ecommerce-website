@@ -192,6 +192,9 @@ export interface AdminUser {
   email: string;
   role: AdminRole;
   active: boolean;
+  phone?: string;
+  shift?: string;
+  mandiHub?: string;
 }
 
 export interface CartItem {

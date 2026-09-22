@@ -16,6 +16,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
+import { t } from '../../utils/translations';
 
 export const Navbar: React.FC = () => {
   const {
@@ -47,19 +48,19 @@ export const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { label: 'Home', page: 'home' },
-    { label: 'Shop Produce', page: 'shop' },
-    { label: 'Categories', page: 'categories' },
+    { label: t('home', language), page: 'home' },
+    { label: t('shopProduce', language), page: 'shop' },
+    { label: t('categories', language), page: 'categories' },
     {
-      label: "Today's Prices",
+      label: t('todaysPrices', language),
       page: 'todays-prices',
       highlight: true,
-      badge: 'Live',
+      badge: language === 'ml' ? 'തത്സമയം' : 'Live',
     },
-    { label: 'Wholesale Hub', page: 'wholesale' },
-    { label: 'Quick Bulk Order', page: 'wholesale-quick-order' },
-    { label: 'Track Order', page: 'track-order' },
-    { label: 'Contact & Map', page: 'contact' },
+    { label: t('wholesaleHub', language), page: 'wholesale' },
+    { label: t('quickBulkOrder', language), page: 'wholesale-quick-order' },
+    { label: t('trackOrder', language), page: 'track-order' },
+    { label: t('contactAndMap', language), page: 'contact' },
   ];
 
   return (
@@ -70,17 +71,17 @@ export const Navbar: React.FC = () => {
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-700 text-emerald-100 uppercase tracking-wider">
-                Daily Rates
+                {t('dailyMandiRates', language)}
               </span>
               <span className="font-medium text-emerald-50 text-xs sm:text-sm">
                 {settings.announcementText}
               </span>
             </div>
 
-            <div className="flex items-center gap-4 text-xs font-medium text-emerald-200 ml-auto">
+            <div className="flex items-center gap-3 sm:gap-4 text-xs font-medium text-emerald-200 ml-auto">
               <div className="hidden md:flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 text-emerald-300" />
-                <span>Rates: {settings.lastMarketPriceUpdateTimestamp}</span>
+                <span>{t('livePriceUpdated', language)}: {settings.lastMarketPriceUpdateTimestamp}</span>
               </div>
               <a
                 href={`tel:${settings.phone}`}
@@ -89,21 +90,40 @@ export const Navbar: React.FC = () => {
                 <Phone className="w-3.5 h-3.5 text-emerald-300" />
                 <span>{settings.phone}</span>
               </a>
-              {/* Language Switcher */}
-              <button
-                onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-                className="hover:text-white px-2 py-0.5 rounded border border-emerald-700/60 text-xs font-semibold uppercase tracking-wider transition-colors"
-                title="Toggle English / Arabic"
-              >
-                {language === 'en' ? 'العربية' : 'English'}
-              </button>
+              {/* Language Switcher: English and Malayalam */}
+              <div className="flex items-center bg-emerald-950/60 rounded-lg p-0.5 border border-emerald-700/60 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setLanguage('en')}
+                  className={`px-2 py-0.5 rounded-md transition-all ${
+                    language === 'en'
+                      ? 'bg-emerald-500 text-white font-bold shadow-xs'
+                      : 'text-emerald-300 hover:text-white'
+                  }`}
+                  title="Switch to English"
+                >
+                  EN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLanguage('ml')}
+                  className={`px-2 py-0.5 rounded-md transition-all ${
+                    language === 'ml'
+                      ? 'bg-emerald-500 text-white font-bold shadow-xs'
+                      : 'text-emerald-300 hover:text-white'
+                  }`}
+                  title="മലയാളത്തിലേക്ക് മാറ്റുക"
+                >
+                  മലയാളം
+                </button>
+              </div>
               {/* Quick Admin shortcut */}
               <button
                 onClick={() => navigateTo(currentAdmin ? 'admin-dashboard' : 'admin-login')}
                 className="text-[11px] text-emerald-300 hover:text-emerald-100 underline decoration-emerald-500/60 underline-offset-2 flex items-center gap-1"
               >
-                <ShieldCheck className="w-3 h-3" />
-                {currentAdmin ? 'Admin Panel' : 'Staff Login'}
+                <ShieldCheck className="w-3.5 h-3.5" />
+                {currentAdmin ? t('adminPanel', language) : t('staffLogin', language)}
               </button>
             </div>
           </div>

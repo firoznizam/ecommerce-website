@@ -58,8 +58,8 @@ interface StoreContextType {
   navigateTo: (page: string, options?: NavigateOptions) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  language: 'en' | 'ar';
-  setLanguage: (lang: 'en' | 'ar') => void;
+  language: 'en' | 'ml';
+  setLanguage: (lang: 'en' | 'ml') => void;
 
   // Catalog & Products
   products: Product[];
@@ -141,9 +141,19 @@ interface StoreContextType {
 
   // Admin Auth
   currentAdmin: AdminUser | null;
-  adminLogin: (email: string, role?: AdminRole) => boolean;
+  adminLogin: (email: string, role?: AdminRole, name?: string) => boolean;
   adminLogout: () => void;
   switchAdminRole: (role: AdminRole) => void;
+  updateAdminInfo: (info: Partial<AdminUser>) => void;
+  addDailyProducePrice: (params: {
+    productId: string;
+    retailPrice: number;
+    wholesalePrice: number;
+    stock?: number;
+    date?: string;
+    note?: string;
+    mandiHub?: string;
+  }) => void;
 
   // Quick Wholesale helpers
   smartReorderItems: Product[];
@@ -151,7 +161,7 @@ interface StoreContextType {
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_PREFIX = 'adam_veg_kerala_v8_';
+const LOCAL_STORAGE_PREFIX = 'adam_veg_kerala_v9_';
 
 function loadFromStorage<T>(key: string, fallback: T): T {
   try {
@@ -192,7 +202,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [activeCategorySlug, setActiveCategorySlug] = useState<string | null>(null);
   const [activeOrderNo, setActiveOrderNo] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [language, setLanguageState] = useState<'en' | 'ar'>('en');
+  const [language, setLanguageState] = useState<'en' | 'ml'>('en');
 
   // Persistence State
   const [products, setProducts] = useState<Product[]>(() =>
@@ -312,9 +322,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const setLanguage = (lang: 'en' | 'ar') => {
+  const setLanguage = (lang: 'en' | 'ml') => {
     setLanguageState(lang);
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = 'ltr';
     document.documentElement.lang = lang;
   };
 
@@ -701,10 +711,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const logoutCustomer = () => setCustomer(null);
 
   // Admin Auth
-  const adminLogin = (email: string, role: AdminRole = 'Super Admin'): boolean => {
+  const adminLogin = (email: string, role: AdminRole = 'Super Admin', name?: string): boolean => {
     setCurrentAdmin({
-      id: 'admin-01',
-      name: 'Adam Produce Manager',
+      id: `admin-${Date.now()}`,
+      name: name || (email.includes('@') ? email.split('@')[0] : 'Adam Staff'),
       email,
       role,
       active: true,
@@ -720,6 +730,77 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (currentAdmin) {
       setCurrentAdmin({ ...currentAdmin, role });
     }
+  };
+
+  const updateAdminInfo = (info: Partial<AdminUser>) => {
+    setCurrentAdmin((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        ...info,
+      };
+    });
+  };
+
+  const addDailyProducePrice = (params: {
+    productId: string;
+    retailPrice: number;
+    wholesalePrice: number;
+    stock?: number;
+    date?: string;
+    note?: string;
+    mandiHub?: string;
+  }) => {
+    const prod = products.find((p) => p.id === params.productId);
+    if (!prod) return;
+
+    const effectiveDate = params.date || new Date().toISOString().split('T')[0];
+    const changeDirection =
+      params.retailPrice > prod.retailPrice
+        ? 'increased'
+        : params.retailPrice < prod.retailPrice
+        ? 'dropped'
+        : 'unchanged';
+
+    const now = new Date();
+    const formattedTimestamp = `${effectiveDate} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id !== params.productId) return p;
+        return {
+          ...p,
+          previousRetailPrice: p.retailPrice,
+          previousWholesalePrice: p.wholesalePrice,
+          retailPrice: params.retailPrice,
+          wholesalePrice: params.wholesalePrice,
+          stock: typeof params.stock === 'number' ? params.stock : p.stock,
+          priceChangeDirection: changeDirection,
+          lastPriceUpdate: formattedTimestamp,
+          priceUpdatedToday: true,
+        };
+      })
+    );
+
+    const historyRecord: PriceHistoryRecord = {
+      id: `ph-daily-${Date.now()}`,
+      productId: prod.id,
+      productName: prod.name,
+      oldPrice: prod.retailPrice,
+      newPrice: params.retailPrice,
+      priceType: 'retail',
+      unit: String(prod.unit),
+      effectiveAt: formattedTimestamp,
+      changedBy: currentAdmin?.name || 'Super Admin',
+      reason: params.note || `Daily morning rate entered by Super Admin (${params.mandiHub || 'Kerala Mandi'})`,
+    };
+
+    setPriceHistory((prev) => [historyRecord, ...prev]);
+
+    setSettings((prev) => ({
+      ...prev,
+      lastMarketPriceUpdateTimestamp: formattedTimestamp,
+    }));
   };
 
   // Smart reorder items from past orders
@@ -803,6 +884,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         adminLogin,
         adminLogout,
         switchAdminRole,
+        updateAdminInfo,
+        addDailyProducePrice,
 
         smartReorderItems,
       }}

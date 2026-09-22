@@ -21,6 +21,7 @@ import { OrderConfirmationPage } from './pages/OrderConfirmationPage';
 import { OrderTrackingPage } from './pages/OrderTrackingPage';
 import { AboutContactPage } from './pages/AboutContactPage';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AccountPage } from './pages/AccountPage';
 
 const AppContent: React.FC = () => {
   const { currentPage } = useStore();
@@ -34,6 +35,7 @@ const AppContent: React.FC = () => {
       case 'categories':
         return <CategoriesPage />;
       case 'product-detail':
+      case 'product':
         return <ProductDetailPage />;
       case 'todays-prices':
         return <TodaysPricesPage />;
@@ -48,11 +50,18 @@ const AppContent: React.FC = () => {
       case 'order-confirmation':
         return <OrderConfirmationPage />;
       case 'order-tracking':
+      case 'track-order':
         return <OrderTrackingPage />;
       case 'about-contact':
+      case 'contact':
         return <AboutContactPage />;
       case 'admin':
+      case 'admin-dashboard':
+      case 'admin-login':
+      case 'staff-login':
         return <AdminDashboard />;
+      case 'account':
+        return <AccountPage />;
       default:
         return <HomePage />;
     }
